@@ -1,38 +1,40 @@
 # OpenServer
-lightweight, ultra-mini, actor-mode, high-performance, high-concurrency cross-platform server framework with component design.
-OpenServer is mainly implemented using open source projects such as OpenSocket and OpenThread. OpenSocket is a high-performance multiplexing IO library, and OpenThread can easily implement the Actor model. Component design pattern decomposes business into components, and then different components assemble different Actors to realize business logic.
+OpenServer是一款超轻量、超迷你、Actor模式、组件设计的高性能、高并发的跨全平台服务器框架。
 
-The Actor model and component design can simplify business logic, facilitate unit testing, and make it easier to maintain and find bugs.
+OpenServer主要使用OpenSocket和OpenThread等开源项目实现。OpenSocket是高性能复用IO库，OpenThread可以轻松实现Actor模式。
+组件设计模式，把业务分解封装成组件，再由不同的组件组装出不同的Actor，从而实现业务逻辑。
 
-With the use of OpenJson, the same business can be encapsulated into components, and then the configuration file json can be used to control the assembly and start the related services, greatly improving the software development efficiency.
+Actor模式和组件设计，可以简化业务逻辑，易于单元测试，也更容易维护和寻找BUG。
+
+配合OpenJson使用，可以把相同的业务封装成组件，然后用配置文件json去控制组装和启动相关服务，大幅软件开发效率。
 
 
-**OpenLinyou is committed to the development of C++ cross-platform high-concurrency and high-performance server framework, with full platform design, supporting Windows, Linux, Mac, Android and iOS platforms. It can make full use of the advantages and tools of each platform to develop and write code on VS or XCode, and achieve one code running on all platforms.**
+**OpenLinyou致力于C++跨平台高并发高性能服务器框架开发，全平台设计，支持windows、linux、mac、安卓和iOS等平台，可以充分利用各平台的优势和工具，在VS或者XCode上开发写代码，做到一份代码跑全部平台。**
 OpenLinyou：https://www.openlinyou.com
 OpenServer:https://github.com/openlinyou/openserver
 https://gitee.com/linyouhappy/openserver
 
-## Cross-platform support
-Linux and Android use epoll, iOS and Mac use kqueue, Windows use IOCP(wepoll).other systems use select.
+## 跨平台支持
+Linux和安卓使用epoll，Windows使用IOCP(wepoll)，iOS和Mac使用kqueue，其他系统使用select。
 
-## Compilation and execution
-Please install the cmake tool. With cmake you can build a VS or XCode project and compile and run it on VS or XCode.
-Source code:https://github.com/openlinyou/openserver
+## 编译和执行
+请安装cmake工具，用cmake可以构建出VS或者XCode工程，就可以在vs或者xcode上编译运行。
+源代码：https://github.com/openlinyou/openserver
 https://gitee.com/linyouhappy/openserver
 ```
-#Clone the project
+#克隆项目
 git clone https://github.com/openlinyou/openserver
 cd ./openserver
-#Create a build project directory
+#创建build工程目录
 mkdir build
 cd build
 cmake ..
-# If it's win32, openserver.sln will appear in this directory. Click it to start VS for coding and debugging.
+#如果是win32，在该目录出现openserver.sln，点击它就可以启动vs写代码调试
 make
 ./helloworld
 ```
 
-## All source files
+## 全部源文件
 + src/socket_os.h
 + src/socket_os.c
 + src/opensocket.h
@@ -55,22 +57,25 @@ make
 + src/openfsm.cpp
    
 
-## Technical features
-OpenServer's technical features:
-1. Cross-platform design, this server framework can run on Android and iOS.
-2. Linux and Android use epoll, Windows use IOCP (wepoll), iOS and Mac use kqueue, other systems use select.
-3. Support IPv6, mini and small, adopt Actor mode and component design, assemble business through components.
-4. The Actor mode and component design can easily realize high concurrency and distributed. The business and service can also be customized through configuration files.
-5. One thread one actor, one actor is composed of multiple components. Develop server in a way of playing building blocks.
+## 技术特点
+OpenServer的技术特点：
+1. 跨全平台设计，此服务器框架可以运行在安卓和iOS上。
+2. Linux和安卓使用epoll，Windows使用IOCP(wepoll)，iOS和Mac使用kqueue，其他系统使用select。
+3. 支持IPv6，小巧迷你，采用Actor模式和组件设计，通过组件去组装业务。
+4. Actor模式和组件设计，可以非常容易实现高并发和分布式。也可以通过配置文件去定制业务和启动服务。
+5. 一条线程一个actor，一个actor由多个组件组装。用玩积木的方式去做服务器开发。
 
-## 1.Test demo
-One thread is an actor, making it a server. All the actors are the same, but different components are loaded.
+## 1.测试例子
+这个是一个实现UDP通信的例子。
+一条线程就是一个actor，把它成为服务者（server）。所有的actor都一样，不同的是放了不同的组件。
 
-First, implement two components ComUDPClient and ComUDPServer, which inherit from OpenComSocket and can receive UDP network messages. Through OpenServer::RegisterCom, these two components are registered to the Server. Its function is very simple, that is, to create a component object and give it a name. This component object has a New function, so that the corresponding object can be created by name.
+首先实现两个组件ComUDPClient和ComUDPServer，它们都继承OpenComSocket，从而可以接收UDP网络消息。
+通过OpenServer::RegisterCom，把这两个组件注册到Server上。它的作用很简单，就是创建一个组件对象，并给它起个名字。
+这个组件对象，有一个New函数，从而实现通过名字就可以创建对应的对象。
 
-Next is to assemble the Server. The OpenServer::StartServer interface implements the creation of the Server, giving it a name, and then specifying the above component names. The server can be created. Although the OpenServer::StartServer will return the Server object pointer, do not easily modify its attribute data, because its attribute data is managed by the thread it is in.
+接下来就是组装Server。OpenServer::StartServer这个接口实现创建Server，给这个server取个名字，然后指定上述的组件名称。就可以把这个server创建出来。尽管OpenServer::StartServer会返回这个Server对象指针，但是不要轻易修改它的属性数据，因为它的属性数据由它所在的线程管理。
 
-In this test example, a UDPServer server is created and two UDPClients are created, and their names must be different. The two clients periodically send heartbeats to the server through UDP.
+本测试例子创建了一个UDPServer服务器，创建了两个UDPClient，它们的名字必须要不一致。两个客户端通过UDP向服务器定时发送心跳。
 
 ```C++
 #include <assert.h>

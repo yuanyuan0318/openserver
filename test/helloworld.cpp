@@ -1,78 +1,3 @@
-# OpenServer
-lightweight, ultra-mini, actor-mode, high-performance, high-concurrency cross-platform server framework with component design.
-OpenServer is mainly implemented using open source projects such as OpenSocket and OpenThread. OpenSocket is a high-performance multiplexing IO library, and OpenThread can easily implement the Actor model. Component design pattern decomposes business into components, and then different components assemble different Actors to realize business logic.
-
-The Actor model and component design can simplify business logic, facilitate unit testing, and make it easier to maintain and find bugs.
-
-With the use of OpenJson, the same business can be encapsulated into components, and then the configuration file json can be used to control the assembly and start the related services, greatly improving the software development efficiency.
-
-
-**OpenLinyou is committed to the development of C++ cross-platform high-concurrency and high-performance server framework, with full platform design, supporting Windows, Linux, Mac, Android and iOS platforms. It can make full use of the advantages and tools of each platform to develop and write code on VS or XCode, and achieve one code running on all platforms.**
-OpenLinyou：https://www.openlinyou.com
-OpenServer:https://github.com/openlinyou/openserver
-https://gitee.com/linyouhappy/openserver
-
-## Cross-platform support
-Linux and Android use epoll, iOS and Mac use kqueue, Windows use IOCP(wepoll).other systems use select.
-
-## Compilation and execution
-Please install the cmake tool. With cmake you can build a VS or XCode project and compile and run it on VS or XCode.
-Source code:https://github.com/openlinyou/openserver
-https://gitee.com/linyouhappy/openserver
-```
-#Clone the project
-git clone https://github.com/openlinyou/openserver
-cd ./openserver
-#Create a build project directory
-mkdir build
-cd build
-cmake ..
-# If it's win32, openserver.sln will appear in this directory. Click it to start VS for coding and debugging.
-make
-./helloworld
-```
-
-## All source files
-+ src/socket_os.h
-+ src/socket_os.c
-+ src/opensocket.h
-+ src/opensocket.cpp
-+ src/wepoll.h(only win32)
-+ src/wepoll.c(only win32)
-+ src/openthread.h
-+ src/openthread.cpp
-+ src/openserver.h
-+ src/openserver.cpp
-+ src/opentime.h
-+ src/opentime.cpp
-+ src/openbuffer.h
-+ src/openbuffer.cpp
-+ src/openjson.h
-+ src/openjson.cpp
-+ src/opencsv.h
-+ src/opencsv.cpp
-+ src/openfsm.h
-+ src/openfsm.cpp
-   
-
-## Technical features
-OpenServer's technical features:
-1. Cross-platform design, this server framework can run on Android and iOS.
-2. Linux and Android use epoll, Windows use IOCP (wepoll), iOS and Mac use kqueue, other systems use select.
-3. Support IPv6, mini and small, adopt Actor mode and component design, assemble business through components.
-4. The Actor mode and component design can easily realize high concurrency and distributed. The business and service can also be customized through configuration files.
-5. One thread one actor, one actor is composed of multiple components. Develop server in a way of playing building blocks.
-
-## 1.Test demo
-One thread is an actor, making it a server. All the actors are the same, but different components are loaded.
-
-First, implement two components ComUDPClient and ComUDPServer, which inherit from OpenComSocket and can receive UDP network messages. Through OpenServer::RegisterCom, these two components are registered to the Server. Its function is very simple, that is, to create a component object and give it a name. This component object has a New function, so that the corresponding object can be created by name.
-
-Next is to assemble the Server. The OpenServer::StartServer interface implements the creation of the Server, giving it a name, and then specifying the above component names. The server can be created. Although the OpenServer::StartServer will return the Server object pointer, do not easily modify its attribute data, because its attribute data is managed by the thread it is in.
-
-In this test example, a UDPServer server is created and two UDPClients are created, and their names must be different. The two clients periodically send heartbeats to the server through UDP.
-
-```C++
 #include <assert.h>
 #include <time.h>
 #include <math.h>
@@ -80,6 +5,7 @@ In this test example, a UDPServer server is created and two UDPClients are creat
 #include "openbuffer.h"
 #include "openserver.h"
 using namespace open;
+
 
 ////////////ComUDPClientMsg//////////////////////
 struct ComUDPClientMsg : public OpenMsgProtoMsg
@@ -200,6 +126,7 @@ private:
     }
 };
 
+
 ////////////ComUDPServer//////////////////////
 class ComUDPServer : public OpenComSocket
 {
@@ -292,7 +219,9 @@ private:
 int main()
 {
     OpenApp::Instance().start();
+
     OpenTimer::Run();
+
     //register component
     OpenServer::RegisterCom<ComUDPClient>("ComUDPClient");
     OpenServer::RegisterCom<ComUDPServer>("ComUDPServer");
@@ -303,6 +232,7 @@ int main()
         OpenServer::StartServer("UDPClient1", { "ComUDPClient" }),
         OpenServer::StartServer("UDPClient2", { "ComUDPClient" })
     };
+
     const std::string testListenIp = "0.0.0.0";
     const std::string testServerIp = "127.0.0.1";
     const int testServerPort_ = 9999;
@@ -331,6 +261,7 @@ int main()
             assert(ret);
         }
     }
+
     //Do not delete data.
     clients.clear();
 
@@ -338,5 +269,3 @@ int main()
     printf("Pause\n");
     return getchar();
 }
-
-```
