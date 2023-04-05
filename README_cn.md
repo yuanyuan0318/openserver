@@ -6,7 +6,7 @@ OpenServer主要使用OpenSocket和OpenThread等开源项目实现。OpenSocket�
 
 Actor模式和组件设计，可以简化业务逻辑，易于单元测试，也更容易维护和寻找BUG。
 
-配合OpenJson使用，可以把相同的业务封装成组件，然后用配置文件json去控制组装和启动相关服务，大幅软件开发效率。
+配合OpenJson使用，可以把相同的业务封装成组件，然后用配置文件json去控制组装和启动相关服务，大幅提高软件开发效率。
 
 
 **OpenLinyou致力于C++跨平台高并发高性能服务器框架开发，全平台设计，支持windows、linux、mac、安卓和iOS等平台，可以充分利用各平台的优势和工具，在VS或者XCode上开发写代码，做到一份代码跑全部平台。**
