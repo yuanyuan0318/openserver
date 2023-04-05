@@ -32,29 +32,6 @@ make
 ./helloworld
 ```
 
-## All source files
-+ src/socket_os.h
-+ src/socket_os.c
-+ src/opensocket.h
-+ src/opensocket.cpp
-+ src/wepoll.h(only win32)
-+ src/wepoll.c(only win32)
-+ src/openthread.h
-+ src/openthread.cpp
-+ src/openserver.h
-+ src/openserver.cpp
-+ src/opentime.h
-+ src/opentime.cpp
-+ src/openbuffer.h
-+ src/openbuffer.cpp
-+ src/openjson.h
-+ src/openjson.cpp
-+ src/opencsv.h
-+ src/opencsv.cpp
-+ src/openfsm.h
-+ src/openfsm.cpp
-   
-
 ## Technical features
 OpenServer's technical features:
 1. Cross-platform design, this server framework can run on Android and iOS.
@@ -340,3 +317,26 @@ int main()
 }
 
 ```
+
+## All source files
++ src/socket_os.h
++ src/socket_os.c
++ src/opensocket.h
++ src/opensocket.cpp
++ src/wepoll.h(only win32)
++ src/wepoll.c(only win32)
++ src/openthread.h
++ src/openthread.cpp
++ src/openserver.h
++ src/openserver.cpp
++ src/opentime.h
++ src/opentime.cpp
++ src/openbuffer.h
++ src/openbuffer.cpp
++ src/openjson.h
++ src/openjson.cpp
++ src/opencsv.h
++ src/opencsv.cpp
++ src/openfsm.h
++ src/openfsm.cpp
+   

@@ -34,29 +34,6 @@ make
 ./helloworld
 ```
 
-## 全部源文件
-+ src/socket_os.h
-+ src/socket_os.c
-+ src/opensocket.h
-+ src/opensocket.cpp
-+ src/wepoll.h(only win32)
-+ src/wepoll.c(only win32)
-+ src/openthread.h
-+ src/openthread.cpp
-+ src/openserver.h
-+ src/openserver.cpp
-+ src/opentime.h
-+ src/opentime.cpp
-+ src/openbuffer.h
-+ src/openbuffer.cpp
-+ src/openjson.h
-+ src/openjson.cpp
-+ src/opencsv.h
-+ src/opencsv.cpp
-+ src/openfsm.h
-+ src/openfsm.cpp
-   
-
 ## 技术特点
 OpenServer的技术特点：
 1. 跨全平台设计，此服务器框架可以运行在安卓和iOS上。
@@ -345,3 +322,26 @@ int main()
 }
 
 ```
+
+## 全部源文件
++ src/socket_os.h
++ src/socket_os.c
++ src/opensocket.h
++ src/opensocket.cpp
++ src/wepoll.h(only win32)
++ src/wepoll.c(only win32)
++ src/openthread.h
++ src/openthread.cpp
++ src/openserver.h
++ src/openserver.cpp
++ src/opentime.h
++ src/opentime.cpp
++ src/openbuffer.h
++ src/openbuffer.cpp
++ src/openjson.h
++ src/openjson.cpp
++ src/opencsv.h
++ src/opencsv.cpp
++ src/openfsm.h
++ src/openfsm.cpp
+   
